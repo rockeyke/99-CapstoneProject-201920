@@ -207,11 +207,7 @@ class ArmAndClaw(object):
                (i.e., 14.2 motor revolutions),
           3. Resets the motor's position to 0.
         """
-        self.motor.turn_on(100)
-        while True:
-            if self.touch_sensor.is_pressed():
-                break
-        self.motor.turn_off()
+        self.raise_arm()
         self.motor.reset_position()
         self.motor.turn_on(-100)
         while True:
