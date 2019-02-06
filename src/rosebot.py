@@ -213,9 +213,11 @@ class ArmAndClaw(object):
                 break
         self.motor.turn_off()
         self.motor.turn_on(-100)
-        while abs(self.motor.get_position()) > 0:
-            self.motor.turn_on(-100)
-            
+        while True:
+            if abs(self.motor.get_position()) == 0:
+                break
+        self.motor.turn_off()
+
     def move_arm_to_position(self, desired_arm_position):
         """
         Move its Arm to the given position, where 0 means all the way DOWN.
