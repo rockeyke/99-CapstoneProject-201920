@@ -217,6 +217,7 @@ class ArmAndClaw(object):
             if abs(self.motor.get_position()) >= (14.2 * 360):
                 break
         self.motor.turn_off()
+        self.motor.reset_position()
 
     def move_arm_to_position(self, desired_arm_position):
         """
