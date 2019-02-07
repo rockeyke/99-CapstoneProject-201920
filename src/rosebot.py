@@ -76,6 +76,7 @@ class DriveSystem(object):
         """ Makes the left and right wheel motors spin at the given speeds. """
         self.left_motor.turn_on(left_wheel_speed)
         self.right_motor.turn_on(right_wheel_speed)
+        
     def stop(self):
         """ Stops the left and right wheel motors. """
         self.right_motor.turn_off()
@@ -170,7 +171,6 @@ class DriveSystem(object):
     # -------------------------------------------------------------------------
 
 
-
 ###############################################################################
 #    ArmAndClaw
 ###############################################################################
@@ -229,6 +229,7 @@ class ArmAndClaw(object):
             if abs(self.motor.get_position()) == desired_arm_position:
                 break
         self.motor.turn_off()
+
     def lower_arm(self):
         """
         Lowers the Arm until it is all the way down, i.e., position 0.
@@ -239,6 +240,7 @@ class ArmAndClaw(object):
             if abs(self.motor.get_position()) >= (14.2 * 360):
                 break
         self.motor.turn_off()
+
 
 ###############################################################################
 #    SensorSystem
