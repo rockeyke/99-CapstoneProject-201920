@@ -23,7 +23,7 @@ def main():
     # Construct and connect the MQTT Client:
     # -------------------------------------------------------------------------
     mqtt_sender = com.MqttClient()
-    mqtt_sender.connect_to_ev3("mosquitto.csse.rose-hulman.edu", 12)
+    mqtt_sender.connect_to_ev3()
 
 
     # -------------------------------------------------------------------------

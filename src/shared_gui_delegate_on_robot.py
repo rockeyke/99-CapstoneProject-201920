@@ -14,5 +14,6 @@ class DelegateThatReceives(object):
         self.robot = robot
 
     def forward(self, left_speed, right_speed):
+        print('forward message received')
         self.robot.drive_system.go(int(left_speed),
                                    int(right_speed))
