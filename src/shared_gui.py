@@ -176,7 +176,7 @@ def handle_backward(left_entry_box, right_entry_box, mqtt_sender):
       :type  right_entry_box:  ttk.Entry
       :type  mqtt_sender:      com.MqttClient
     """
-    print("backward", (left_entry_box.get() * -1), (right_entry_box.get() * -1))
+    print("backward", left_entry_box.get()*-1, right_entry_box.get()*-1)
     mqtt_sender.send_message("backward", [left_entry_box.get()*-1, right_entry_box.get()*-1])
 
 def handle_left(left_entry_box, right_entry_box, mqtt_sender):
@@ -206,8 +206,7 @@ def handle_stop(mqtt_sender):
     Tells the robot to stop.
       :type  mqtt_sender:  com.MqttClient
     """
-    print("stop")
-    mqtt_sender.send_message("stop")
+
 
 ###############################################################################
 # Handlers for Buttons in the ArmAndClaw frame.
@@ -217,6 +216,7 @@ def handle_raise_arm(mqtt_sender):
     Tells the robot to raise its Arm until its touch sensor is pressed.
       :type  mqtt_sender:  com.MqttClient
     """
+    print('raise arm')
     mqtt_sender.send_message("raise_arm")
 
 
@@ -225,6 +225,7 @@ def handle_lower_arm(mqtt_sender):
     Tells the robot to lower its Arm until it is all the way down.
       :type  mqtt_sender:  com.MqttClient
     """
+    print('lower arm')
     mqtt_sender.send_message("lower_arm")
 
 
@@ -235,6 +236,7 @@ def handle_calibrate_arm(mqtt_sender):
     all the way down, and then to mark taht position as position 0.
       :type  mqtt_sender:  com.MqttClient
     """
+    print('calibrate arm')
     mqtt_sender.send_message("calibrate_arm")
 
 
@@ -245,16 +247,21 @@ def handle_move_arm_to_position(arm_position_entry, mqtt_sender):
       :type  arm_position_entry  ttk.Entry
       :type  mqtt_sender:        com.MqttClient
     """
-    mqtt_sender.send_message("calibrate_arm", arm_position_entry)
+    print('move arm to position ', arm_position_entry)
+    mqtt_sender.send_message("move_arm_to_position", arm_position_entry)
 
 ###############################################################################
 # Handlers for Buttons in the Control frame.
 ###############################################################################
+
+
 def handle_quit(mqtt_sender):
     """
     Tell the robot's program to stop its loop (and hence quit).
       :type  mqtt_sender:  com.MqttClient
     """
+    print('quit')
+    mqtt_sender.send_message('quit')
 
 
 def handle_exit(mqtt_sender):
@@ -263,3 +270,5 @@ def handle_exit(mqtt_sender):
     Then exit this program.
       :type mqtt_sender: com.MqttClient
     """
+    print('exit')
+    mqtt_sender.send_message('exit')
