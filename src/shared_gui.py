@@ -176,8 +176,10 @@ def handle_backward(left_entry_box, right_entry_box, mqtt_sender):
       :type  right_entry_box:  ttk.Entry
       :type  mqtt_sender:      com.MqttClient
     """
-    print("backward", left_entry_box.get()*-1, right_entry_box.get()*-1)
-    mqtt_sender.send_message("backward", [left_entry_box.get()*-1, right_entry_box.get()*-1])
+    l = left_entry_box.get() * -1
+    r = right_entry_box.get() * -1
+    print("backward", l, r)
+    mqtt_sender.send_message("backward", [l, r])
 
 def handle_left(left_entry_box, right_entry_box, mqtt_sender):
     """
