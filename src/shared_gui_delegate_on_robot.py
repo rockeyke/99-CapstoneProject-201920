@@ -6,3 +6,13 @@
     and Alex Hinojosa, Jack Wilson, and Kirsten Rockey.
   Winter term, 2018-2019.
 """
+
+
+class DelegateThatReceives(object):
+    def __init__(self, robot):
+        """ :type   robot = rosebot.RoseBot  """
+        self.robot = robot
+
+    def forward(self, left_speed, right_speed):
+        self.robot.drive_system.go(int(left_speed),
+                                   int(right_speed))
