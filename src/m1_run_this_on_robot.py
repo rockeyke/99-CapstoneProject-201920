@@ -24,14 +24,17 @@ def main():
 def run_test_arm():
     robot = rosebot.RoseBot()
     robot.arm_and_claw.calibrate_arm()
-    # robot.arm_and_claw.move_arm_to_position(9*360)
-    # robot.arm_and_claw.lower_arm()
+    robot.arm_and_claw.move_arm_to_position(10*360)
+    robot.arm_and_claw.move_arm_to_position(3*360)
     robot.arm_and_claw.raise_arm()
     robot.arm_and_claw.lower_arm()
 
 
 def real_thing():
     robot = rosebot.RoseBot()
+    print("calibrating arm")
+    robot.arm_and_claw.calibrate_arm()
+
     receiver_delegate = shared_gui_delegate_on_robot.DelegateThatReceives(robot)
     mqtt_receiver = com.MqttClient(receiver_delegate)
     mqtt_receiver.connect_to_pc()
