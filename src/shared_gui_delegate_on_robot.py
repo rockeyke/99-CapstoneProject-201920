@@ -17,3 +17,18 @@ class DelegateThatReceives(object):
         print('forward message received')
         self.robot.drive_system.go(int(left_speed),
                                    int(right_speed))
+
+    def backward(self, left_speed, right_speed):
+        print('backward message received')
+        self.robot.drive_system.go(int(left_speed),
+                                   int(right_speed))
+
+    def left(self, left_speed, right_speed):
+        print('left message received')
+        self.robot.drive_system.go(int(left_speed),
+                                   int(right_speed))
+
+    def right(self, left_speed, right_speed):
+        print('right message received')
+        self.robot.drive_system.go(int(left_speed),
+                                   int)
