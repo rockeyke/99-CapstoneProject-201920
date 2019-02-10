@@ -99,7 +99,7 @@ class DriveSystem(object):
         for the given number of inches, using the approximate
         conversion factor of 10.0 inches per second at 100 (full) speed.
         """
-        
+
     def go_straight_for_inches_using_encoder(self, inches, speed):
         """
         Makes the robot go straight (forward if speed > 0, else backward)
@@ -239,10 +239,16 @@ class ArmAndClaw(object):
         Move its Arm to the given position, where 0 means all the way DOWN.
         The robot must have previously calibrated its Arm.
         """
-        self.motor.turn_on(100)
-        while True:
-            if abs(self.motor.get_position()) >= desired_arm_position:
-                break
+        if self.motor.get_position() >= desired_arm_position:
+            self.motor.turn_on(-100)
+            while True:
+                if abs(self.motor.get_position()) >= desired_arm_position:
+                    break
+        else:
+            self.motor.turn_on(100)
+            while True:
+                if abs(self.motor.get_position()) >= desired_arm_position:
+                    break
         self.motor.turn_off()
 
     def lower_arm(self):
