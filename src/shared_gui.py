@@ -165,8 +165,10 @@ def get_special_frame(window, mqtt_sender):
     frame_label.grid(row=0, column=1)
     distance_label.grid(row=2, column=0)
     time_label.grid(row=2, column=2)
+    speed_label.grid(row=2, column=1)
     distance_entry.grid(row=3, column=0)
     time_entry.grid(row=3, column=2)
+    speed_entry.grid(row=3, column=1)
     straight_for_seconds_button.grid(row=4, column=2)
     straight_for_inches_using_time_button.grid(row=4, column=1)
     straight_for_inches_using_encoder_button.grid(row=4, column=0)
@@ -177,6 +179,7 @@ def get_special_frame(window, mqtt_sender):
     straight_for_inches_using_encoder_button["command"] = lambda: handle_straight_for_inches_using_enc(mqtt_sender,
                                                                                                        distance_entry,
                                                                                                        speed_entry)
+    return frame
 
 
 def handle_straight_for_seconds(mqtt_sender, time_entry, speed_entry):
