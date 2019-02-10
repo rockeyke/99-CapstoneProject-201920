@@ -131,9 +131,9 @@ def sound_frame(window, mqtt_sender):
     speak_button = ttk.Button(frame, text="Press to Speak")
     speak_entry = ttk.Entry(frame, width=8)
 
-    frame_label.grid(row=0, column=1)
+    frame_label.grid(row=0, column=0)
     beep_x_times.grid(row=1, column=0)
-    beep_entry.grid(row=2, column=1)
+    beep_entry.grid(row=1, column=1)
     play_tone.grid(row=2, column=0)
     tone_entry.grid(row=2, column=1)
     speak_button.grid(row=3, column=0)

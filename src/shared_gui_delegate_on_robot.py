@@ -52,3 +52,27 @@ class DelegateThatReceives(object):
     def move_arm_to_position(self, arm_position_entry):
         print('move arm to position message received')
         self.robot.arm_and_claw.move_arm_to_position(int(arm_position_entry))
+
+    def go_straight_for_seconds(self, seconds_entry, speed_entry):
+        print('go straight for seconds message received')
+        self.robot.drive_system.go_straight_for_seconds(int(seconds_entry), int(speed_entry))
+
+    def go_straight_for_inches_using_time(self, inches_entry, speed_entry):
+        print('go straight for inches using time message received')
+        self.robot.drive_system.go_straight_for_inches_using_time(int(inches_entry), int(speed_entry))
+
+    def go_straight_for_inches_using_encoder(self, inches_entry, speed_entry):
+        print('go straight for inches using encoder message received')
+        self.robot.drive_system.go_straight_for_inches_using_encoder(int(inches_entry), int(speed_entry))
+
+    def beep(self, beep_entry):
+        print('beep message received')
+        print('I will beep', str(beep_entry), 'number of times')
+
+    def tone(self, tone_entry):
+        print('tone message received')
+        print('I will make a tone at', str(tone_entry), 'Hz')
+
+    def speak(self, speak_entry):
+        print('speak messgae received')
+        print('I will say', str(speak_entry))
