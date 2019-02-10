@@ -177,7 +177,7 @@ def get_control_frame(window, mqtt_sender):
 
 
 def get_special_frame(window, mqtt_sender):
-    frame = ttk.Frame(window, padding=10, borerwidth=5, relief="ridge")
+    frame = ttk.Frame(window, padding=10, borderwidth=5, relief="ridge")
     frame.grid()
 
     frame_label = ttk.Label(frame, text="Special Functions")
@@ -213,17 +213,17 @@ def get_special_frame(window, mqtt_sender):
 
 def handle_straight_for_seconds(mqtt_sender, time_entry, speed_entry):
     print("go_straight_for_seconds", time_entry.get(), speed_entry.get())
-    mqtt_sender.send_message("go_straight_for_seconds", [time_entry.get(), speed_entry.get()])
+    mqtt_sender.send_message("go_straight_for_seconds", [time_entry.get()], [speed_entry.get()])
 
 
 def handle_straight_for_inches_using_time(mqtt_sender, distance_entry, speed_entry):
     print("go straight for inches using time", distance_entry.get(), speed_entry.get())
-    mqtt_sender.send_message("go_straight_for_inches_using_time", [distance_entry.get(), speed_entry.get()])
+    mqtt_sender.send_message("go_straight_for_inches_using_time", [distance_entry.get()], [speed_entry.get()])
 
 
 def handle_straight_for_inches_using_enc(mqtt_sender, distance_entry, speed_entry):
     print("go straight for inches using encoder", distance_entry.get(), speed_entry.get())
-    mqtt_sender.send_message("go_straight_for_inches_using_encoder", [distance_entry.get(), speed_entry.get()])
+    mqtt_sender.send_message("go_straight_for_inches_using_encoder", [distance_entry.get()], [speed_entry.get()])
 
 
 ###############################################################################
