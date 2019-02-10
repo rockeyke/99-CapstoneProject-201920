@@ -25,10 +25,22 @@ class DelegateThatReceives(object):
 
     def left(self, left_speed, right_speed):
         print('left message received')
-        self.robot.drive_system.go(int(left_speed),
+        self.robot.drive_system.go(-int(left_speed),
                                    int(right_speed))
 
     def right(self, left_speed, right_speed):
         print('right message received')
         self.robot.drive_system.go(int(left_speed),
-                                   int)
+                                   -int(right_speed))
+
+    def stop(self):
+        print('stop message received')
+        self.robot.drive_system.stop()
+
+    def raise_arm(self):
+        print('raise arm message received')
+        self.robot.arm_and_claw.raise_arm()
+
+    def lower_arm(self):
+        print('lower arm message received')
+        self.robot.arm_and_claw.lower_arm()
