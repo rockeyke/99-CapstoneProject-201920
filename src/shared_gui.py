@@ -378,3 +378,4 @@ def handle_tone(tone_entry, mqtt_sender):
 def handle_speak(speak_entry, mqtt_sender):
     print('speak', speak_entry())
     mqtt_sender.send_message('speak', [speak_entry()])
+
