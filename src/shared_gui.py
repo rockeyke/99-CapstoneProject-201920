@@ -146,6 +146,54 @@ def get_control_frame(window, mqtt_sender):
 
     return frame
 
+
+def get_special_frame(window, mqtt_sender):
+    frame = ttk.Frame(window, padding=10, borerwidth=5, relief="ridge")
+    frame.grid()
+
+    frame_label = ttk.Label(frame, text="Special Functions")
+    distance_entry = ttk.Entry(frame, width=8)
+    time_entry = ttk.Entry(frame, width=8)
+    distance_label = ttk.Label(frame, text="Distance in inches")
+    time_label = ttk.Label(frame, text="Time in seconds")
+    speed_label = ttk.Label(frame, text="Speed for special functions")
+    speed_entry = ttk.Entry(frame, width=8)
+    straight_for_seconds_button = ttk.Button(frame, text="Go Straight for Seconds")
+    straight_for_inches_using_time_button = ttk.Button(frame, text="Go Straight for Inches using time")
+    straight_for_inches_using_encoder_button = ttk.Button(frame, text="Go Straight for Inches using encoder")
+
+    frame_label.grid(row=0, column=1)
+    distance_label.grid(row=2, column=0)
+    time_label.grid(row=2, column=2)
+    distance_entry.grid(row=3, column=0)
+    time_entry.grid(row=3, column=2)
+    straight_for_seconds_button.grid(row=4, column=2)
+    straight_for_inches_using_time_button.grid(row=4, column=1)
+    straight_for_inches_using_encoder_button.grid(row=4, column=0)
+    straight_for_seconds_button["command"] = lambda: handle_straight_for_seconds(mqtt_sender, time_entry, speed_entry)
+    straight_for_inches_using_time_button["command"] = lambda: handle_straight_for_inches_using_time(mqtt_sender,
+                                                                                                     distance_entry,
+                                                                                                     speed_entry)
+    straight_for_inches_using_encoder_button["command"] = lambda: handle_straight_for_inches_using_enc(mqtt_sender,
+                                                                                                       distance_entry,
+                                                                                                       speed_entry)
+
+
+def handle_straight_for_seconds(mqtt_sender, time_entry, speed_entry):
+    print("go_straight_for_seconds", time_entry.get(), speed_entry.get())
+    mqtt_sender.send_message("go_straight_for_seconds", [time_entry.get(), speed_entry.get()])
+
+
+def handle_straight_for_inches_using_time(mqtt_sender, distance_entry, speed_entry):
+    print("go straight for inches using time", distance_entry.get(), speed_entry.get())
+    mqtt_sender.send_message("go_straight_for_inches_using_time", [distance_entry.get(), speed_entry.get()])
+
+
+def handle_straight_for_inches_using_enc(mqtt_sender, distance_entry, speed_entry):
+    print("go straight for inches using encoder", distance_entry.get(), speed_entry.get())
+    mqtt_sender.send_message("go_straight_for_inches_using_encoder", [distance_entry.get(), speed_entry.get()])
+
+
 ###############################################################################
 ###############################################################################
 # The following specifies, for each Button,
