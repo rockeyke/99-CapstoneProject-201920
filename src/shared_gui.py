@@ -119,6 +119,35 @@ def get_arm_frame(window, mqtt_sender):
     return frame
 
 
+def sound_frame(window, mqtt_sender):
+    frame = ttk.Frame(window, padding=10, borderwidth=5, relief="ridge")
+    frame.grid()
+
+    frame_label = ttk.Label(frame, text="Sound")
+    beep_x_times = ttk.Button(frame, text="Enter Beep Times")
+    beep_entry = ttk.Entry(frame, width=8)
+    play_tone = ttk.Button(frame, text="Press to Play Tone")
+    tone_entry = ttk.Entry(frame, width=8)
+    speak_button = ttk.Button(frame, text="Press to Speak")
+    speak_entry = ttk.Entry(frame, width=8)
+
+    frame_label.grid(row=0, column=1)
+    beep_x_times.grid(row=1, column=0)
+    beep_entry.grid(row=2, column=1)
+    play_tone.grid(row=2, column=0)
+    tone_entry.grid(row=2, column=1)
+    speak_button.grid(row=3, column=0)
+    speak_entry.grid(row=3, column=1)
+
+    beep_x_times["command"] = lambda: handle_beep(beep_entry,
+                                                  mqtt_sender)
+    play_tone["command"] = lambda: handle_tone(tone_entry,
+                                               mqtt_sender)
+    speak_button["command"] = lambda: handle_speak(speak_entry,
+                                                   mqtt_sender)
+
+    return frame
+
 def get_control_frame(window, mqtt_sender):
     """
     Constructs and returns a frame on the given window, where the frame has
@@ -333,3 +362,18 @@ def handle_exit(mqtt_sender):
     """
     print('exit')
     mqtt_sender.send_message('exit')
+
+
+def handle_beep(beep_entry, mqtt_sender):
+    print('beep', beep_entry.get())
+    mqtt_sender.send_message("beep", [beep_entry.get()])
+
+
+def handle_tone(tone_entry, mqtt_sender):
+    print('tone', tone_entry.get())
+    mqtt_sender.send_message('tone', [tone_entry.get()])
+
+
+def handle_speak(speak_entry, mqtt_sender):
+    print('speak', speak_entry())
+    mqtt_sender.send_message('speak', [speak_entry()])
