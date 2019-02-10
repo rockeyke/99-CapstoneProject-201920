@@ -44,3 +44,11 @@ class DelegateThatReceives(object):
     def lower_arm(self):
         print('lower arm message received')
         self.robot.arm_and_claw.lower_arm()
+
+    def calibrate_arm(self):
+        print('calibrate arm message received')
+        self.robot.arm_and_claw.calibrate_arm()
+
+    def move_arm_to_position(self, arm_position_entry):
+        print('move arm to position message received')
+        self.robot.arm_and_claw.move_arm_to_position(int(arm_position_entry))
