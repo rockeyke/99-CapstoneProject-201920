@@ -18,6 +18,7 @@ def main():
       2. Communicates via MQTT with the GUI code that runs on the LAPTOP.
     """
     # run_test_arm()
+    #run_test_drive()
     real_thing()
 
 
@@ -28,6 +29,20 @@ def run_test_arm():
     robot.arm_and_claw.move_arm_to_position(3*360)
     robot.arm_and_claw.raise_arm()
     robot.arm_and_claw.lower_arm()
+
+
+def run_test_drive():
+    robot = rosebot.RoseBot()
+    # robot.drive_system.go_straight_for_seconds(5, 100)
+    # robot.drive_system.go_straight_for_seconds(2, 50)
+    # robot.drive_system.go_straight_for_seconds(10, 25)
+
+    robot.drive_system.go_straight_for_inches_using_time(10, 100)
+    robot.drive_system.go_straight_for_inches_using_time(10, 50)
+    time.sleep(3)
+    robot.drive_system.go_straight_for_inches_using_time(5, 50)
+
+    robot.drive_system.go_straight_for_inches_using_encoder(12, 100)
 
 
 def real_thing():
