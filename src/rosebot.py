@@ -93,12 +93,20 @@ class DriveSystem(object):
             if time.time() - start >= seconds:
                 self.stop()
                 break
+
     def go_straight_for_inches_using_time(self, inches, speed):
         """
         Makes the robot go straight at the given speed
         for the given number of inches, using the approximate
         conversion factor of 10.0 inches per second at 100 (full) speed.
         """
+        x = 0
+        v = speed * 0.1
+        self.go(speed, speed)
+        while True:
+            if v * time.time() >= inches:
+                self.stop()
+                break
 
     def go_straight_for_inches_using_encoder(self, inches, speed):
         """
@@ -115,7 +123,6 @@ class DriveSystem(object):
             if distance_gone >= inches:
                 self.stop()
                 break
-
 
     # -------------------------------------------------------------------------
     # Methods for driving that use the color sensor.

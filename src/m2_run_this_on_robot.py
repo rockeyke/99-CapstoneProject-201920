@@ -10,6 +10,7 @@ import mqtt_remote_method_calls as com
 import time
 import shared_gui_delegate_on_robot as sgdr
 
+
 def main():
     """
     This code, which must run on the EV3 ROBOT:
@@ -31,4 +32,6 @@ def real_thing():
 # -----------------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
 # -----------------------------------------------------------------------------
+
+
 main()
