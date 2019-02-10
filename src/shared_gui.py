@@ -148,6 +148,7 @@ def sound_frame(window, mqtt_sender):
 
     return frame
 
+
 def get_control_frame(window, mqtt_sender):
     """
     Constructs and returns a frame on the given window, where the frame has
@@ -213,17 +214,17 @@ def get_special_frame(window, mqtt_sender):
 
 def handle_straight_for_seconds(mqtt_sender, time_entry, speed_entry):
     print("go_straight_for_seconds", time_entry.get(), speed_entry.get())
-    mqtt_sender.send_message("go_straight_for_seconds", [time_entry.get()], [speed_entry.get()])
+    mqtt_sender.send_message("go_straight_for_seconds", [time_entry.get(), speed_entry.get()])
 
 
 def handle_straight_for_inches_using_time(mqtt_sender, distance_entry, speed_entry):
     print("go straight for inches using time", distance_entry.get(), speed_entry.get())
-    mqtt_sender.send_message("go_straight_for_inches_using_time", [distance_entry.get()], [speed_entry.get()])
+    mqtt_sender.send_message("go_straight_for_inches_using_time", [distance_entry.get(), speed_entry.get()])
 
 
 def handle_straight_for_inches_using_enc(mqtt_sender, distance_entry, speed_entry):
     print("go straight for inches using encoder", distance_entry.get(), speed_entry.get())
-    mqtt_sender.send_message("go_straight_for_inches_using_encoder", [distance_entry.get()], [speed_entry.get()])
+    mqtt_sender.send_message("go_straight_for_inches_using_encoder", [distance_entry.get(), speed_entry.get()])
 
 
 ###############################################################################
@@ -375,5 +376,6 @@ def handle_tone(tone_entry, mqtt_sender):
 
 
 def handle_speak(speak_entry, mqtt_sender):
-    print('speak', speak_entry().get)
-    mqtt_sender.send_message('speak', [speak_entry().get])
+    print('speak', speak_entry())
+    mqtt_sender.send_message('speak', [speak_entry()])
+
