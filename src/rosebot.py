@@ -100,7 +100,6 @@ class DriveSystem(object):
         for the given number of inches, using the approximate
         conversion factor of 10.0 inches per second at 100 (full) speed.
         """
-        x = 0
         v = speed * 0.1
         self.go(speed, speed)
         while True:
