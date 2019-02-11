@@ -147,8 +147,8 @@ def sound_frame(window, mqtt_sender):
 
     beep_x_times["command"] = lambda: handle_beep(beep_entry,
                                                   mqtt_sender)
-    play_tone["command"] = lambda: handle_tone([tone_entry_box1],
-                                               [tone_entry_box2],
+    play_tone["command"] = lambda: handle_tone([tone_entry_box1,
+                                                tone_entry_box2],
                                                mqtt_sender)
     speak_button["command"] = lambda: handle_speak(speak_entry,
                                                    mqtt_sender)
