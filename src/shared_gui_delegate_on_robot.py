@@ -12,6 +12,7 @@ class DelegateThatReceives(object):
     def __init__(self, robot):
         """ :type   robot = rosebot.RoseBot  """
         self.robot = robot
+        self.is_time_to_stop = False
 
     def forward(self, left_speed, right_speed):
         print('forward message received')
@@ -53,6 +54,14 @@ class DelegateThatReceives(object):
         print('move arm to position message received')
         self.robot.arm_and_claw.move_arm_to_position(int(arm_position_entry))
 
+    def quit(self):
+        print('quit message received')
+        self.is_time_to_stop = True
+
+    def exit(self):
+        print('exit message received')
+        self.exit()
+
     def go_straight_for_seconds(self, seconds_entry, speed_entry):
         print('go straight for seconds message received')
         self.robot.drive_system.go_straight_for_seconds(int(seconds_entry), int(speed_entry))
@@ -68,6 +77,8 @@ class DelegateThatReceives(object):
     def beep(self, beep_entry):
         print('beep message received')
         print('I will beep', str(beep_entry), 'number of times')
+        for k in range(int(beep_entry)):
+            self.robot.sound_system.beeper.beep().wait()
 
     def tone(self, tone_entry):
         print('tone message received')
