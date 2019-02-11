@@ -41,6 +41,8 @@ class RoseBot(object):
 ###############################################################################
 #    DriveSystem
 ###############################################################################
+
+
 class DriveSystem(object):
     """
     Controls the robot's motion via GO and STOP methods,
@@ -174,7 +176,7 @@ class DriveSystem(object):
         ir_sensor = InfraredProximitySensor(4)
         self.go(speed, speed)
         while True:
-            if ir_sensor.get_distance() > inches:
+            if ir_sensor.get_distance_in_inches() >= inches:
                 self.stop()
                 break
 
@@ -184,6 +186,12 @@ class DriveSystem(object):
         the given number of inches from the nearest object that it senses.
         Assumes that it senses an object when it starts.
         """
+        ir_sensor = InfraredProximitySensor(4)
+        self.go(-speed, -speed)
+        while True:
+            if ir_sensor.get_distance_in_inches() <= inches:
+                self.stop()
+                break
 
     def go_until_distance_is_within(self, delta, inches, speed):
         """
@@ -195,6 +203,17 @@ class DriveSystem(object):
         the robot should move until it is between 6.8 and 7.4 inches
         from the object.
         """
+        ir_sensor = InfraredProximitySensor(4)
+        a = inches - delta
+        b = inches + delta
+        while True:
+            if ir_sensor.get_distance_in_inches() < a:
+                self.go(speed, speed)
+            elif ir_sensor.get_distance_in_inches() > b:
+                self.go(-speed, -speed)
+            else:
+                self.stop()
+                break
 
     # -------------------------------------------------------------------------
     # Methods for driving that use the infrared beacon sensor.
