@@ -362,7 +362,8 @@ def handle_exit(mqtt_sender):
       :type mqtt_sender: com.MqttClient
     """
     print('exit')
-    mqtt_sender.send_message('exit')
+    handle_quit(mqtt_sender)
+    exit()
 
 
 def handle_beep(beep_entry, mqtt_sender):
