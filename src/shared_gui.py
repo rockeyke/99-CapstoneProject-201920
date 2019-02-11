@@ -378,9 +378,9 @@ def handle_beep(beep_entry, mqtt_sender):
     mqtt_sender.send_message("beep", [beep_entry.get()])
 
 
-def handle_tone(tone_entry, mqtt_sender):
-    print('tone', tone_entry.get())
-    mqtt_sender.send_message('tone', [tone_entry.get()])
+def handle_tone(tone_entry_box1, tone_entry_box2, mqtt_sender):
+    print('tone', tone_entry_box1.get(), tone_entry_box2.get())
+    mqtt_sender.send_message('tone', [tone_entry_box1.get(), tone_entry_box2.get()])
 
 
 def handle_speak(speak_entry, mqtt_sender):
