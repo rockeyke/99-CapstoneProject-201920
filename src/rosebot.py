@@ -335,7 +335,7 @@ class ArmAndClaw(object):
         """
         self.motor.turn_on(-100)
         while True:
-            if abs(self.motor.get_position()) <= (0):
+            if abs(self.motor.get_position()) <= (100):
                 break
         self.motor.turn_off()
 
@@ -391,8 +391,8 @@ class LEDSystem(object):
     """
     def __init__(self):
         """ Constructs and stores the left and right LED objects. """
-        self.left_led = LED()
-        self.right_led = LED()
+        self.left_led = LED(left_or_right='left')
+        self.right_led = LED(left_or_right='right')
 
     def turn_both_leds_off(self):
         """ Turns the left and right LEDs off. """
