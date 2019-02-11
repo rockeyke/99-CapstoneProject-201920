@@ -127,7 +127,8 @@ def sound_frame(window, mqtt_sender):
     beep_x_times = ttk.Button(frame, text="Enter Beep Times")
     beep_entry = ttk.Entry(frame, width=8)
     play_tone = ttk.Button(frame, text="Press to Play Tone")
-    tone_entry = ttk.Entry(frame, width=8)
+    tone_entry_box1 = ttk.Entry(frame, width=8)
+    tone_entry_box2 = ttk.Entry(frame, width=8)
     speak_button = ttk.Button(frame, text="Press to Speak")
     speak_entry = ttk.Entry(frame, width=8)
 
@@ -135,13 +136,15 @@ def sound_frame(window, mqtt_sender):
     beep_x_times.grid(row=1, column=0)
     beep_entry.grid(row=1, column=1)
     play_tone.grid(row=2, column=0)
-    tone_entry.grid(row=2, column=1)
+    tone_entry_box1.grid(row=2, column=1)
+    tone_entry_box2.grid(row=2, column=2)
     speak_button.grid(row=3, column=0)
     speak_entry.grid(row=3, column=1)
 
     beep_x_times["command"] = lambda: handle_beep(beep_entry,
                                                   mqtt_sender)
-    play_tone["command"] = lambda: handle_tone(tone_entry,
+    play_tone["command"] = lambda: handle_tone(tone_entry_box1,
+                                               tone_entry_box2,
                                                mqtt_sender)
     speak_button["command"] = lambda: handle_speak(speak_entry,
                                                    mqtt_sender)
