@@ -247,13 +247,23 @@ class DriveSystem(object):
         Prints on the Console the Blob data of the Blob that the camera sees
         (if any).
         """
+        pixy_data = Camera()
 
+        print(pixy_data)
     def spin_clockwise_until_sees_object(self, speed, area):
         """
         Spins clockwise at the given speed until the camera sees an object
         of the trained color whose area is at least the given area.
         Requires that the user train the camera on the color of the object.
         """
+        lws = speed
+        rws = -(speed)
+        predetermined_area = 'xxx'
+        self.go(lws, rws)
+        while True:
+            if predetermined_area >= area:
+                break
+        self.stop()
 
     def spin_counterclockwise_until_sees_object(self, speed, area):
         """
@@ -261,7 +271,14 @@ class DriveSystem(object):
         of the trained color whose area is at least the given area.
         Requires that the user train the camera on the color of the object.
         """
-
+        lws = -(speed)
+        rws = (speed)
+        predetermined_area = 'xxx'
+        self.go(lws, rws)
+        while True:
+            if predetermined_area >= area:
+                break
+        self.stop()
 
 ###############################################################################
 #    ArmAndClaw
@@ -883,6 +900,7 @@ class ToneMaker(object):
 
           :rtype subprocess.Popen
         """
+
         return self._tone_maker.tone(tones)
 
 
