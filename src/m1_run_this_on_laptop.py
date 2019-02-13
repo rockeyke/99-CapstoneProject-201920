@@ -123,15 +123,15 @@ def get_proximity_frame(window, mqtt_sender):
 
 def handle_fast_beep(initial_rate_entry, increase_rate_entry, mqtt_sender):
     print('Fast Beep Proximity', 'initial value:', initial_rate_entry.get(), 'rate:', increase_rate_entry.get())
-    mqtt_sender.send_message("beep", [initial_rate_entry.get(), increase_rate_entry.get()])
+    mqtt_sender.send_message("fast_beep_prox", [initial_rate_entry.get(), increase_rate_entry.get()])
 
 def handle_LED(initial_rate_entry, increase_rate_entry, mqtt_sender):
     print('LED Proximity', 'initial value:', initial_rate_entry.get(), 'rate:', increase_rate_entry.get())
-    mqtt_sender.send_message("beep", [initial_rate_entry.get(), increase_rate_entry.get()])
+    mqtt_sender.send_message("led_prox", [initial_rate_entry.get(), increase_rate_entry.get()])
 
 def handle_frequency(frequency_entry, increase_rate_entry, mqtt_sender):
     print('Frequency Proximity', 'initial value:', frequency_entry.get(), 'rate:', increase_rate_entry.get())
-    mqtt_sender.send_message("beep", [frequency_entry.get(), increase_rate_entry.get()])
+    mqtt_sender.send_message("frequency_prox", [frequency_entry.get(), increase_rate_entry.get()])
 
 
 # -----------------------------------------------------------------------------

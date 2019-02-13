@@ -396,9 +396,21 @@ class LEDSystem(object):
 
     def turn_both_leds_off(self):
         """ Turns the left and right LEDs off. """
+        self.left_led.turn_off()
+        self.right_led.turn_off()
 
     def only_left_on(self):
         """ Turns the left LED on and the right LED off """
+        self.left_led.turn_on()
+        self.right_led.turn_off()
+
+    def only_right_on(self):
+        self.right_led.turn_on()
+        self.left_led.turn_off()
+
+    def turn_both_leds_on(self):
+        self.left_led.turn_on()
+        self.right_led.turn_on()
 
 ###############################################################################
 #    BeaconSystem
