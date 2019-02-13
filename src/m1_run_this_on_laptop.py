@@ -49,11 +49,11 @@ def main():
     # Frames that are particular to my individual contributions to the project.
     # -------------------------------------------------------------------------
     # DONE: Implement and call get_my_frames(...)
-
+    proximity_frame = get_proximity_frame(main_frame, mqtt_sender)
     # -------------------------------------------------------------------------
     # Grid the frames.
     # -------------------------------------------------------------------------
-    grid_frames(teleop_frame, arm_frame, control_frame, special_frame, sound_frame)
+    grid_frames(teleop_frame, arm_frame, control_frame, special_frame, sound_frame, proximity_frame)
 
 
     # -------------------------------------------------------------------------
@@ -72,12 +72,66 @@ def get_shared_frames(main_frame, mqtt_sender):
     return teleop_frame, arm_frame, control_frame, special_frame, sound_frame
 
 
-def grid_frames(teleop_frame, arm_frame, control_frame, special_frame, sound_frame):
+def grid_frames(teleop_frame, arm_frame, control_frame, special_frame, sound_frame, proximity_frame):
     teleop_frame.grid(row=0, column=0)
     arm_frame.grid(row=1, column=0)
     control_frame.grid(row=2, column=0)
     special_frame.grid(row=0, column=1)
     sound_frame.grid(row=1, column=1)
+    proximity_frame.grid(row=2, column=1)
+
+def get_proximity_frame(window, mqtt_sender):
+    #Construct labels, entry boxes and buttons
+    frame = ttk.Frame(window, padding=10, borderwidth=5, relief="ridge")
+    frame.grid()
+
+    frame_label = ttk.Label(frame, text="Proximity Controls")
+    initial_rate_label = ttk.Label(frame, text="Initial Rate")
+    increase_rate_label = ttk.Label(frame, text="Rate of Increase")
+    frequency_label = ttk.Label(frame, text="Initial Frequency")
+
+    initial_rate_entry = ttk.Entry(frame, width=8)
+    increase_rate_entry = ttk.Entry(frame, width=8)
+    frequency_entry = ttk.Entry(frame, width=8)
+
+    fast_beep_button = ttk.Button(frame, text="Beep proximity")
+    frequency_button = ttk.Button(frame, text="Frequency proximity")
+    LED_button = ttk.Button(frame, text="LED proximity")
+
+    #Grid constructions
+    frame_label.grid(row=0, column=1)
+    initial_rate_label.grid(row=1, column=0)
+    initial_rate_entry.grid(row=2, column=0)
+    increase_rate_label.grid(row=3, column=0)
+    increase_rate_entry.grid(row=4, column=0)
+    frequency_label.grid(row=5, column=0)
+    frequency_entry.grid(row=6, column=0)
+    fast_beep_button.grid(row=2, column=3)
+    frequency_button.grid(row=3, column=3)
+    LED_button.grid(row=4, column=3)
+
+    # Set the button callbacks:
+    fast_beep_button["command"] = lambda: handle_fast_beep(
+        initial_rate_entry, increase_rate_entry, mqtt_sender)
+    frequency_button["command"] = lambda: handle_frequency(
+        frequency_entry, increase_rate_entry, mqtt_sender)
+    fast_beep_button["command"] = lambda: handle_LED(
+        initial_rate_entry, increase_rate_entry, mqtt_sender)
+
+    return frame
+
+
+def handle_fast_beep(initial_rate_entry, increase_rate_entry, mqtt_sender):
+    print('Fast Beep Proximity', 'initial value:', initial_rate_entry.get(), 'rate:', increase_rate_entry.get())
+    mqtt_sender.send_message("beep", [initial_rate_entry.get(), increase_rate_entry.get()])
+
+def handle_LED(initial_rate_entry, increase_rate_entry, mqtt_sender):
+    print('LED Proximity', 'initial value:', initial_rate_entry.get(), 'rate:', increase_rate_entry.get())
+    mqtt_sender.send_message("beep", [initial_rate_entry.get(), increase_rate_entry.get()])
+
+def handle_frequency(frequency_entry, increase_rate_entry, mqtt_sender):
+    print('Frequency Proximity', 'initial value:', frequency_entry.get(), 'rate:', increase_rate_entry.get())
+    mqtt_sender.send_message("beep", [frequency_entry.get(), increase_rate_entry.get()])
 
 
 # -----------------------------------------------------------------------------

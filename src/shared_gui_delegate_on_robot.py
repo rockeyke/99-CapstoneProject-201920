@@ -85,4 +85,4 @@ class DelegateThatReceives(object):
 
     def speak(self, speak_entry):
         print('speak messgae received')
-        self.robot.sound_system.speak_maker.speak(str(speak_entry))
+        self.robot.sound_system.speech_maker.speak(str(speak_entry))
