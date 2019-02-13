@@ -6,6 +6,7 @@
     and Alex Hinojosa, Jack Wilson, and Kirsten Rockey.
   Winter term, 2018-2019.
 """
+import m1_special_functions as m1
 
 
 class DelegateThatReceives(object):
@@ -86,3 +87,15 @@ class DelegateThatReceives(object):
     def speak(self, speak_entry):
         print('speak messgae received')
         self.robot.sound_system.speech_maker.speak(str(speak_entry))
+
+    def fast_beep_prox(self, initial_rate, increase_rate):
+        print('fast beep proximity message received')
+        m1.fast_beep_prox(self.robot, int(initial_rate), int(increase_rate))
+
+    def frequency_prox(self, initial_frequency, increase_rate):
+        print('frequency proximity message received')
+        m1.frequency_prox(self.robot, int(initial_frequency), int(increase_rate))
+
+    def led_prox(self, initial_rate, increase_rate):
+        print('LED proximity message received')
+        m1.led_prox(self.robot, int(initial_rate), int(increase_rate))

@@ -18,7 +18,8 @@ def main():
       2. Communicates via MQTT with the GUI code that runs on the LAPTOP.
     """
     # run_test_arm()
-    #run_test_drive()
+    # run_test_drive()
+    # run_proximity_test()
     real_thing()
 
 
@@ -58,70 +59,6 @@ def real_thing():
         time.sleep(0.01)
         if receiver_delegate.is_time_to_stop:
             break
-
-
-def fast_beep_prox(initial_rate, increase_rate):
-    robot = rosebot.RoseBot()
-    initial_distance = robot.sensor_system.ir_proximity_sensor.get_distance()
-    robot.drive_system.go(50, 50)
-    while True:
-        robot.sound_system.beeper.beep().wait()
-        current_distance = robot.sensor_system.ir_proximity_sensor.get_distance()
-        if current_distance < initial_distance:
-            initial_rate = initial_rate-increase_rate
-            initial_distance = current_distance
-            time.sleep(initial_rate)
-        else:
-            time.sleep(initial_rate)
-
-        if current_distance == 0:
-            robot.drive_system.stop()
-            break
-    robot.arm_and_claw.raise_arm()
-
-
-def led_prox(initial_rate, increase_rate):
-    robot = rosebot.RoseBot()
-    initial_distance = robot.sensor_system.ir_proximity_sensor.get_distance()
-    robot.drive_system.go(50, 50)
-    while True:
-        robot.led_system.only_left_on()
-        time.sleep(initial_rate)
-        robot.led_system.only_right_on()
-        time.sleep(initial_rate)
-        robot.led_system.turn_both_leds_on()
-        time.sleep(initial_rate)
-        robot.led_system.turn_both_leds_off()
-        time.sleep(initial_rate)
-        current_distance = robot.sensor_system.ir_proximity_sensor.get_distance()
-        if current_distance < initial_distance:
-            initial_rate = initial_rate-increase_rate
-            initial_distance = current_distance
-            time.sleep(initial_rate)
-        else:
-            time.sleep(initial_rate)
-
-        if current_distance == 0:
-            robot.drive_system.stop()
-            break
-    robot.arm_and_claw.raise_arm()
-
-
-def frequency_prox(initial_frequency, increase_rate):
-    robot = rosebot.RoseBot()
-    initial_distance = robot.sensor_system.ir_proximity_sensor.get_distance()
-    robot.drive_system.go(50, 50)
-    while True:
-        robot.sound_system.tone_maker.play_tone(initial_frequency, 5000)
-        current_distance = robot.sensor_system.ir_proximity_sensor.get_distance()
-        if current_distance < initial_distance:
-            initial_frequency = initial_frequency+increase_rate
-            initial_distance = current_distance
-
-        if current_distance == 0:
-            robot.drive_system.stop()
-            break
-    robot.arm_and_claw.raise_arm()
 
 # -----------------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
