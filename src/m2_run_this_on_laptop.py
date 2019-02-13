@@ -11,6 +11,7 @@ import mqtt_remote_method_calls as com
 import tkinter
 from tkinter import ttk
 import shared_gui
+import rosebot
 
 
 def main():
@@ -64,6 +65,31 @@ def get_shared_frames(main_frame, mqtt_sender):
     special_frame = shared_gui.get_special_frame(main_frame, mqtt_sender)
 
     return teleop_frame, arm_frame, control_arm, special_frame
+
+
+def color_sensor_frame(window, mqtt_sender):
+    frame = ttk.Frame(window, padding=10, borderwidth=5, relief="ridge")
+    frame.grid()
+
+    frame_label = ttk.Label(frame, text="Color sensor frame")
+    follow_line_button = ttk.Button(frame, text="Follow the black line")
+    speed_label = ttk.Label(frame, text="Input desired speed here")
+    speed_entry = ttk.Entry(frame, width=4)
+    frame_label.grid(row=0, column=1)
+    speed_label.grid(row=1, column=1)
+    speed_entry.grid(row=2, column=1)
+    follow_line_button["command"] = lambda: follow_line(speed_entry.get(), mqtt_sender)
+
+
+def follow_line(speed, mqtt_sender):
+    color_sensor = rosebot.ColorSensor("3")
+    original = color_sensor.get_reflected_light_intensity()
+    print("forward")
+    mqtt_sender.send_message("forward", [speed, speed])
+    if color_sensor.get_reflected_light_intensity() > original:
+        print("spin")
+        mqtt_sender.send_message("stop")
+        mqtt_sender.send_message("forward", [-speed, speed])
 
 
 def grid_frames(teleop_frame, arm_frame, control_frame, special_frame):
