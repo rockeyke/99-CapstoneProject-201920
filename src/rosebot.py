@@ -247,9 +247,10 @@ class DriveSystem(object):
         Prints on the Console the Blob data of the Blob that the camera sees
         (if any).
         """
-        pixy_data = self.sensor_system.camera.get_biggest_blob()
 
-        print(pixy_data)
+        b = self.sensor_system.camera.get_biggest_blob()
+        print(b)
+        
     def spin_clockwise_until_sees_object(self, speed, area):
         """
         Spins clockwise at the given speed until the camera sees an object
