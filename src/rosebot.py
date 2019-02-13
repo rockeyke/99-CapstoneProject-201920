@@ -247,7 +247,7 @@ class DriveSystem(object):
         Prints on the Console the Blob data of the Blob that the camera sees
         (if any).
         """
-        pixy_data = Camera()
+        pixy_data = self.sensor_system.camera.get_biggest_blob()
 
         print(pixy_data)
     def spin_clockwise_until_sees_object(self, speed, area):
@@ -641,8 +641,10 @@ class InfraredProximitySensor(object):
         in inches, where about 39.37 inches (which is 100 cm) means no object
         is within its field of vision.
         """
-        inches_per_cm = 2.54
-        return 48 * inches_per_cm * self.get_distance() / 100
+        cm_per_inches = 2.54
+        distance = (48 / cm_per_inches) * self.get_distance() / 100
+        print(distance)
+        return distance
 
 
 ###############################################################################
