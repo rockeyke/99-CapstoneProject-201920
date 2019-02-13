@@ -22,7 +22,8 @@ def main():
 # -----------------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
 # -----------------------------------------------------------------------------
-    real_thing()
+    ##real_thing()
+    run_test_camera()
 
 
 def real_thing():
@@ -35,6 +36,14 @@ def real_thing():
         if delegate_that_receives.is_time_to_stop:
             break
 
+
+def run_test_camera():
+    robot = rosebot.RoseBot()
+
+    robot.drive_system.display_camera_data()
+    robot.drive_system.spin_counterclockwise_until_sees_object(100, 500)
+    time.sleep(2)
+    robot.drive_system.spin_clockwise_until_sees_object(50, 500)
 
 
 
