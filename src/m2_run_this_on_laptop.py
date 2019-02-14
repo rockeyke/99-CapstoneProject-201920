@@ -12,6 +12,7 @@ import tkinter
 from tkinter import ttk
 import shared_gui
 import rosebot
+import m2_special_functions as m2s
 
 
 def main():
@@ -40,7 +41,7 @@ def main():
     # -------------------------------------------------------------------------
     # Sub-frames for the shared GUI that the team developed:
     # -------------------------------------------------------------------------
-    teleop_frame, arm_frame, control_frame, special_frame = get_shared_frames(mf, mqtt_sender)
+    teleop_frame, arm_frame, control_frame, special_frame, line_follow_frame = get_shared_frames(mf, mqtt_sender)
 
     # -------------------------------------------------------------------------
     # Frames that are particular to my individual contributions to the project.
@@ -50,7 +51,7 @@ def main():
     # -------------------------------------------------------------------------
     # Grid the frames.
     # -------------------------------------------------------------------------
-    grid_frames(teleop_frame, arm_frame, control_frame, special_frame)
+    grid_frames(teleop_frame, arm_frame, control_frame, special_frame, line_follow_frame)
 
     # -------------------------------------------------------------------------
     # The event loop:
@@ -63,40 +64,17 @@ def get_shared_frames(main_frame, mqtt_sender):
     arm_frame = shared_gui.get_arm_frame(main_frame, mqtt_sender)
     control_arm = shared_gui.get_control_frame(main_frame, mqtt_sender)
     special_frame = shared_gui.get_special_frame(main_frame, mqtt_sender)
+    line_follow_frame = m2s.color_sensor_frame(main_frame, mqtt_sender)
 
-    return teleop_frame, arm_frame, control_arm, special_frame
-
-
-def color_sensor_frame(window, mqtt_sender):
-    frame = ttk.Frame(window, padding=10, borderwidth=5, relief="ridge")
-    frame.grid()
-
-    frame_label = ttk.Label(frame, text="Color sensor frame")
-    follow_line_button = ttk.Button(frame, text="Follow the black line")
-    speed_label = ttk.Label(frame, text="Input desired speed here")
-    speed_entry = ttk.Entry(frame, width=4)
-    frame_label.grid(row=0, column=1)
-    speed_label.grid(row=1, column=1)
-    speed_entry.grid(row=2, column=1)
-    follow_line_button["command"] = lambda: follow_line(speed_entry.get(), mqtt_sender)
+    return teleop_frame, arm_frame, control_arm, special_frame, line_follow_frame
 
 
-def follow_line(speed, mqtt_sender):
-    color_sensor = rosebot.ColorSensor("3")
-    original = color_sensor.get_reflected_light_intensity()
-    print("forward")
-    mqtt_sender.send_message("forward", [speed, speed])
-    if color_sensor.get_reflected_light_intensity() > original:
-        print("spin")
-        mqtt_sender.send_message("stop")
-        mqtt_sender.send_message("forward", [-speed, speed])
-
-
-def grid_frames(teleop_frame, arm_frame, control_frame, special_frame):
+def grid_frames(teleop_frame, arm_frame, control_frame, special_frame, line_follow_frame):
     teleop_frame.grid(row=0, column=0)
     arm_frame.grid(row=1, column=0)
     control_frame.grid(row=2, column=0)
     special_frame.grid(row=3, column=0)
+    line_follow_frame.grid(row=4, column=0)
 
 
 # -----------------------------------------------------------------------------
