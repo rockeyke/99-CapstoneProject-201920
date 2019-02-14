@@ -7,6 +7,7 @@
   Winter term, 2018-2019.
 """
 import m1_special_functions as m1
+import m3_special_functions as m3
 
 
 
@@ -103,8 +104,8 @@ class DelegateThatReceives(object):
 
     def spin_clockwise_until_sees_object(self, speed, area):
         print('Spin Clockwise message received')
-        self.robot.drive_system.spin_clockwise_until_sees_object(self.robot, int(speed), int(area))
+        self.robot.drive_system.spin_clockwise_until_sees_object(int(speed), int(area))
 
     def spin_counterclockwise_until_sees_object(self, speed, area):
         print('Spin Counterclockwise message received')
-        self.robot.drive_system.spin_counterclockwise_until_sees_object(self.robot, int(speed), int(area))
+        self.robot.drive_system.spin_counterclockwise_until_sees_object(int(speed), int(area))
