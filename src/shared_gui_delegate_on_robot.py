@@ -101,10 +101,10 @@ class DelegateThatReceives(object):
         print('LED proximity message received')
         m1.led_prox(self.robot, int(initial_rate), int(increase_rate))
 
-    def spin_cw(self, speed, area):
+    def spin_clockwise_until_sees_object(self, speed, area):
         print('Spin Clockwise message received')
         self.robot.drive_system.spin_clockwise_until_sees_object(self.robot, int(speed), int(area))
 
-    def spin_ccw(self, speed, area):
+    def spin_counterclockwise_until_sees_object(self, speed, area):
         print('Spin Counterclockwise message received')
         self.robot.drive_system.spin_counterclockwise_until_sees_object(self.robot, int(speed), int(area))

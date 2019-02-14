@@ -22,8 +22,8 @@ def main():
 # -----------------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
 # -----------------------------------------------------------------------------
-    ##real_thing()
-    run_test_camera()
+    real_thing()
+    ##run_test_camera()
 
 
 def real_thing():
