@@ -11,7 +11,7 @@ import mqtt_remote_method_calls as com
 import tkinter
 from tkinter import ttk
 import shared_gui
-import m1_run_this_on_laptop as m1
+
 
 
 def main():
@@ -46,12 +46,12 @@ def main():
     # -------------------------------------------------------------------------
     # Frames that are particular to my individual contributions to the project.
     # -------------------------------------------------------------------------
-    # TODO: Implement and call get_my_frames(...)
-
+    # DONE: Implement and call get_my_frames(...)
+    spin_frame = get_spin_frame(main_frame, mqtt_sender)
     # -------------------------------------------------------------------------
     # Grid the frames.
     # -------------------------------------------------------------------------
-    grid_frames(teleop_frame, arm_frame, control_frame, special_frame, sound_frame)
+    grid_frames(teleop_frame, arm_frame, control_frame, special_frame, sound_frame, spin_frame)
 
     # -------------------------------------------------------------------------
     # The event loop:
@@ -69,12 +69,13 @@ def get_shared_frames(main_frame, mqtt_sender):
     return teleop_frame, arm_frame, control_frame, special_frame, sound_frame
 
 
-def grid_frames(teleop_frame, arm_frame, control_frame, special_frame, sound_frame):
+def grid_frames(teleop_frame, arm_frame, control_frame, special_frame, sound_frame, spin_frame):
     teleop_frame.grid(row=0, column=0)
     arm_frame.grid(row=1, column=0)
     control_frame.grid(row=2, column=0)
     special_frame.grid(row=0, column=1)
     sound_frame.grid(row=3, column=0)
+    spin_frame.grid(row=1, column=1)
 
 
 def get_spin_frame(window, mqtt_sender):
@@ -83,32 +84,39 @@ def get_spin_frame(window, mqtt_sender):
     frame.grid()
 
     frame_label = ttk.Label(frame, text="Spin Until Object Controls")
-    speed_rate_label = ttk.Label(frame, text="Speed of Spin")
+    speed_label = ttk.Label(frame, text="Speed of Spin")
+    area_label = ttk.Label(frame, text="Area of Object to Stop at")
 
     speed_entry = ttk.Entry(frame, width=10)
+    area_entry = ttk.Entry(frame, width=10)
 
     ccw_spin_button = ttk.Button(frame, text="Spin CounterClockwise")
     cw_spin_button = ttk.Button(frame, text="Spin Clockwise")
 
     frame_label.grid(row=0, column=1)
-    speed_rate_label.grid(row=1, column=0)
+    speed_label.grid(row=1, column=0)
+    area_label.grid(row=1, column=1)
     speed_entry.grid(row=2, column=0)
-    ccw_spin_button.grid(row=1, column=1)
-    cw_spin_button.grid(row=2, column=1)
+    area_entry.grid(row=2, column=1)
+    ccw_spin_button.grid(row=3, column=0)
+    cw_spin_button.grid(row=3, column=1)
+
+    cw_spin_button["command"] = lambda: handle_spincw(
+        speed_entry, area_entry, mqtt_sender)
+    ccw_spin_button["command"] = lambda: handle_spinccw(
+        speed_entry, area_entry, mqtt_sender)
+
+    return frame
 
 
-def get_led_frame(window, mqtt_sender):
-    frame = ttk.Frame(window, padding=10, borderwidth=5, relief="ridge")
-    frame.grid()
-
-    frame_label = ttk.Label(frame, text="LED Controls")
-    right_led_label = ttk.Label(frame, text="Turn on Right LED")
-    left_led_label = ttk.Label(frame, text="Turn on Left LED")
-    both_led_label = ttk.Label(frame, text="Turn on Both LEDs")
-    turn_off_leds = ttk.Label(frame, text="Turn off all LEDs")
+def handle_spincw(speed_entry, area_entry, mqtt_sender):
+    print('Clockwise Spin: ''Speed', speed_entry.get(), 'Area', area_entry.get())
+    mqtt_sender.send_message("spin_clockwise_until_sees_object", [speed_entry.get(), area_entry.get()])
 
 
-
+def handle_spinccw(speed_entry, area_entry, mqtt_sender):
+    print('Counterclockwise Spin: ''Speed', speed_entry.get(), 'Area', area_entry.get())
+    mqtt_sender.send_message("spin_counterclockwise_until_sees_object", [speed_entry.get(), area_entry.get()])
 
 
 
