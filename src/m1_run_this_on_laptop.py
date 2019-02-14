@@ -115,7 +115,7 @@ def get_proximity_frame(window, mqtt_sender):
         initial_rate_entry, increase_rate_entry, mqtt_sender)
     frequency_button["command"] = lambda: handle_frequency(
         frequency_entry, increase_rate_entry, mqtt_sender)
-    fast_beep_button["command"] = lambda: handle_LED(
+    LED_button["command"] = lambda: handle_LED(
         initial_rate_entry, increase_rate_entry, mqtt_sender)
 
     return frame

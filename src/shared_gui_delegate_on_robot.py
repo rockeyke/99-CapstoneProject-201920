@@ -91,15 +91,15 @@ class DelegateThatReceives(object):
 
     def fast_beep_prox(self, initial_rate, increase_rate):
         print('fast beep proximity message received')
-        m1.fast_beep_prox(self.robot, int(initial_rate), int(increase_rate))
+        m1.fast_beep_prox(self.robot, float(initial_rate), float(increase_rate))
 
     def frequency_prox(self, initial_frequency, increase_rate):
         print('frequency proximity message received')
-        m1.frequency_prox(self.robot, int(initial_frequency), int(increase_rate))
+        m1.frequency_prox(self.robot, float(initial_frequency), float(increase_rate))
 
     def led_prox(self, initial_rate, increase_rate):
         print('LED proximity message received')
-        m1.led_prox(self.robot, int(initial_rate), int(increase_rate))
+        m1.led_prox(self.robot, float(initial_rate), float(increase_rate))
 
     def spin_clockwise_until_sees_object(self, speed, area):
         print('Spin Clockwise message received')
