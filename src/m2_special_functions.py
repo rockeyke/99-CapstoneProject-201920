@@ -48,5 +48,3 @@ def move_object():
     arm.raise_arm()
 
 
-def turn_around(speed):
-    
