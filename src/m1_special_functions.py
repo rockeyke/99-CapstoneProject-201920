@@ -10,13 +10,22 @@ def fast_beep_prox(robot, initial_rate, increase_rate):
         if current_distance < initial_distance:
             initial_rate = initial_rate-increase_rate
             initial_distance = current_distance
-            time.sleep(initial_rate)
+            if initial_rate < 0.05:
+                time.sleep(0.05)
+            else:
+                time.sleep(initial_rate)
         elif current_distance > initial_distance:
             initial_rate = initial_rate + increase_rate
             initial_distance = current_distance
-            time.sleep(initial_rate)
+            if initial_rate < 0.05:
+                time.sleep(0.05)
+            else:
+                time.sleep(initial_rate)
         else:
-            time.sleep(initial_rate)
+            if initial_rate < 0.05:
+                time.sleep(0.05)
+            else:
+                time.sleep(initial_rate)
 
         if current_distance <= 5:
             robot.drive_system.stop()
@@ -41,11 +50,15 @@ def led_prox(robot, initial_rate, increase_rate):
         if current_distance < initial_distance:
             initial_rate = initial_rate-increase_rate
             initial_distance = current_distance
-            time.sleep(initial_rate)
+            if increase_rate < 0.05:
+                time.sleep(0.05)
+            else:
+                time.sleep(increase_rate)
         elif current_distance > initial_distance:
             initial_rate = initial_rate + increase_rate
             initial_distance = current_distance
-            time.sleep(initial_rate)
+            if initial_rate < 0.05:
+                time.sleep(0.05)
         else:
             time.sleep(initial_rate)
 
