@@ -48,10 +48,11 @@ def main():
     # -------------------------------------------------------------------------
     # DONE: Implement and call get_my_frames(...)
     spin_frame = get_spin_frame(main_frame, mqtt_sender)
+    final_project_frame = get_final_frame(main_frame, mqtt_sender)
     # -------------------------------------------------------------------------
     # Grid the frames.
     # -------------------------------------------------------------------------
-    grid_frames(teleop_frame, arm_frame, control_frame, special_frame, sound_frame, spin_frame)
+    grid_frames(teleop_frame, arm_frame, control_frame, special_frame, sound_frame, spin_frame, final_project_frame)
 
     # -------------------------------------------------------------------------
     # The event loop:
@@ -66,16 +67,18 @@ def get_shared_frames(main_frame, mqtt_sender):
     special_frame = shared_gui.get_special_frame(main_frame, mqtt_sender)
     sound_frame = shared_gui.sound_frame(main_frame, mqtt_sender)
 
+
     return teleop_frame, arm_frame, control_frame, special_frame, sound_frame
 
 
-def grid_frames(teleop_frame, arm_frame, control_frame, special_frame, sound_frame, spin_frame):
+def grid_frames(teleop_frame, arm_frame, control_frame, special_frame, sound_frame, spin_frame, final_project_frame):
     teleop_frame.grid(row=0, column=0)
     arm_frame.grid(row=1, column=0)
     control_frame.grid(row=2, column=0)
     special_frame.grid(row=0, column=1)
     sound_frame.grid(row=3, column=0)
     spin_frame.grid(row=1, column=1)
+    final_project_frame.grid(row=2, column=1)
 
 
 def get_spin_frame(window, mqtt_sender):
@@ -117,6 +120,65 @@ def handle_spincw(speed_entry, area_entry, mqtt_sender):
 def handle_spinccw(speed_entry, area_entry, mqtt_sender):
     print('Counterclockwise Spin: ''Speed', speed_entry.get(), 'Area', area_entry.get())
     mqtt_sender.send_message("spin_counterclockwise_until_sees_object", [speed_entry.get(), area_entry.get()])
+
+
+def grid_final_frame(final_project_frame):
+    final_project_frame.grid(row=0, column=0)
+
+
+def get_final_frame(window, mqtt_sender):
+    frame = ttk.Frame(window, padding=10, borderwidth=5, relief="ridge")
+    frame.grid()
+
+    frame_label = ttk.Label(frame, text="FINAL Demonstration")
+    dance_label = ttk.Label(frame, text="Learn To Dance With EV3")
+    victory_royale_label = ttk.Label(frame, text="Use this at the end of your Fortnite Games")
+    find_enemy_label = ttk.Label(frame, text="Combat Feature")
+
+    dance_button = ttk.Button(frame, text="Press Me!")
+    find_the_enemy_button = ttk.Button(frame, text="Find the enemy")
+    winning_button = ttk.Button(frame, text="I WON THE GAME")
+    losing_button = ttk.Button(frame, text="We LOST :(")
+
+    frame_label.grid(row=0, column=0)
+    dance_label.grid(row=1, column=0)
+    dance_button.grid(row=1, column=1)
+    find_enemy_label.grid(row=0, column=2)
+    find_the_enemy_button.grid(row=1, column=2)
+    victory_royale_label.grid(row=3, column=0)
+    winning_button.grid(row=2, column=1)
+    losing_button.grid(row=3, column=1)
+
+    dance_button["command"] = lambda: handle_dance(mqtt_sender)
+    find_the_enemy_button["command"] = lambda: handle_find_enemy(mqtt_sender)
+    winning_button["command"] = lambda: handle_win(mqtt_sender)
+    losing_button["command"] = lambda: handle_lose(mqtt_sender)
+
+    return frame
+
+
+def handle_dance(mqtt_sender):
+    print('TIME TO DANCE')
+    mqtt_sender.send_message("dance")
+
+
+def handle_find_enemy(mqtt_sender):
+    print('Finding an Enemy')
+    mqtt_sender.send_message("find_enemy")
+
+
+def handle_win(mqtt_sender):
+    print("Congratulations, You Won")
+    mqtt_sender.send_message("you_won")
+
+
+def handle_lose(mqtt_sender):
+    print("Sorry! You Lost")
+    mqtt_sender.send_message("you_lost")
+
+
+
+
 
 
 
