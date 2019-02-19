@@ -7,7 +7,7 @@ def dance(robot):
     robot.drive_system.left_motor.reset_position()
     while True:
         robot.drive_system.go(50, 100)
-        if robot.drive_system.left_motor.get_position() >= robot.drive_system.wheel_circumference:
+        if robot.drive_system.left_motor.get_position() >= 100:
             break
     robot.drive_system.stop()
     robot.arm_and_claw.calibrate_arm()
@@ -28,15 +28,31 @@ def find_enemy(robot):
             break
     robot.drive_system.stop()
     robot.sound_system.speech_maker.speak('Enemy Spotted on my Location')
+    time.sleep(2)
+    robot.sound_system.speech_maker.speak('Executing Order 66')
+    time.sleep(2)
+    attack()
 
 
 def you_win(robot):
     robot = rosebot.RoseBot()
-    robot.arm_and_claw.calibrate_arm()
+    robot.arm_and_claw.raise_arm()
+    robot.drive_system.go(100, -100)
+    time.sleep(2)
+    robot.drive_system.stop()
     robot.sound_system.speech_maker.speak('Congratulations, lets do it again!')
 
 
 def you_lost(robot):
     robot = rosebot.RoseBot()
+    robot.arm_and_claw.lower_arm()
+    time.sleep(2)
+    robot.sound_system.speech_maker.speak('Mission Failed, Well get them next time')
+
+
+def attack():
+    robot = rosebot.RoseBot()
     robot.arm_and_claw.raise_arm()
-    robot.sound_system.speech_maker.speak('Mission Failed, We will get them next time')
+    time.sleep(1)
+    robot.drive_system.go(100, 100)
+    robot.arm_and_claw.lower_arm()

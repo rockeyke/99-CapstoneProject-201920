@@ -51,7 +51,7 @@ def run_test_camera():
 def introduction():
     robot = rosebot.RoseBot()
     robot.arm_and_claw.calibrate_arm()
-    robot.sound_system.speech_maker.speak('Hey Guys, my name is VR bot, I am here to help you!')
+    robot.sound_system.speech_maker.speak('Hey Guys, my name is VR bot, I am here to help you win!')
 
 
 main()
