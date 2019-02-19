@@ -40,19 +40,17 @@ def main():
     # -------------------------------------------------------------------------
     # Sub-frames for the shared GUI that the team developed:
     # -------------------------------------------------------------------------
-    teleop_frame, arm_frame, control_frame, special_frame, sound_frame = get_shared_frames(main_frame,
-                                                                                           mqtt_sender)
 
     # -------------------------------------------------------------------------
     # Frames that are particular to my individual contributions to the project.
     # -------------------------------------------------------------------------
     # DONE: Implement and call get_my_frames(...)
-    spin_frame = get_spin_frame(main_frame, mqtt_sender)
+
     final_project_frame = get_final_frame(main_frame, mqtt_sender)
     # -------------------------------------------------------------------------
     # Grid the frames.
     # -------------------------------------------------------------------------
-    grid_frames(teleop_frame, arm_frame, control_frame, special_frame, sound_frame, spin_frame, final_project_frame)
+    grid_frames(final_project_frame)
 
     # -------------------------------------------------------------------------
     # The event loop:
@@ -60,24 +58,7 @@ def main():
     root.mainloop()
 
 
-def get_shared_frames(main_frame, mqtt_sender):
-    teleop_frame = shared_gui.get_teleoperation_frame(main_frame, mqtt_sender)
-    arm_frame = shared_gui.get_arm_frame(main_frame, mqtt_sender)
-    control_frame = shared_gui.get_control_frame(main_frame, mqtt_sender)
-    special_frame = shared_gui.get_special_frame(main_frame, mqtt_sender)
-    sound_frame = shared_gui.sound_frame(main_frame, mqtt_sender)
-
-
-    return teleop_frame, arm_frame, control_frame, special_frame, sound_frame
-
-
-def grid_frames(teleop_frame, arm_frame, control_frame, special_frame, sound_frame, spin_frame, final_project_frame):
-    teleop_frame.grid(row=0, column=0)
-    arm_frame.grid(row=1, column=0)
-    control_frame.grid(row=2, column=0)
-    special_frame.grid(row=0, column=1)
-    sound_frame.grid(row=3, column=0)
-    spin_frame.grid(row=1, column=1)
+def grid_frames(final_project_frame):
     final_project_frame.grid(row=2, column=1)
 
 
@@ -132,20 +113,20 @@ def get_final_frame(window, mqtt_sender):
 
     frame_label = ttk.Label(frame, text="FINAL Demonstration")
     dance_label = ttk.Label(frame, text="Learn To Dance With EV3")
-    victory_royale_label = ttk.Label(frame, text="Use this at the end of your Fortnite Games")
+    victory_royale_label = ttk.Label(frame, text="Use this at the end of your Games")
     find_enemy_label = ttk.Label(frame, text="Combat Feature")
 
     dance_button = ttk.Button(frame, text="Press Me!")
     find_the_enemy_button = ttk.Button(frame, text="Find the enemy")
-    winning_button = ttk.Button(frame, text="I WON THE GAME")
-    losing_button = ttk.Button(frame, text="We LOST :(")
+    winning_button = ttk.Button(frame, text="We Won the Battle")
+    losing_button = ttk.Button(frame, text="We Lost the Battle")
 
     frame_label.grid(row=0, column=0)
     dance_label.grid(row=1, column=0)
     dance_button.grid(row=1, column=1)
     find_enemy_label.grid(row=0, column=2)
     find_the_enemy_button.grid(row=1, column=2)
-    victory_royale_label.grid(row=3, column=0)
+    victory_royale_label.grid(row=2, column=0)
     winning_button.grid(row=2, column=1)
     losing_button.grid(row=3, column=1)
 

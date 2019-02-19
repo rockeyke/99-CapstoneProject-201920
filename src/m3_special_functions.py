@@ -15,6 +15,7 @@ def dance(robot):
     time.sleep(1.5)
     robot.drive_system.go(-100, 100)
     time.sleep(1.5)
+    robot.drive_system.stop()
 
 
 def find_enemy(robot):
@@ -32,7 +33,7 @@ def find_enemy(robot):
             break
     robot.drive_system.stop()
     robot.sound_system.speech_maker.speak('Enemy Spotted on my Location. Executing Order 66')
-    time.sleep(4)
+    time.sleep(5)
     attack()
 
 
