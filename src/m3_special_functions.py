@@ -7,10 +7,14 @@ def dance(robot):
     robot.drive_system.left_motor.reset_position()
     while True:
         robot.drive_system.go(50, 100)
-        if robot.drive_system.left_motor.get_position() >= 100:
+        if robot.drive_system.left_motor.get_position() >= 1000:
             break
     robot.drive_system.stop()
     robot.arm_and_claw.calibrate_arm()
+    robot.drive_system.go(100, -100)
+    time.sleep(1.5)
+    robot.drive_system.go(-100, 100)
+    time.sleep(1.5)
 
 
 def find_enemy(robot):
@@ -28,7 +32,7 @@ def find_enemy(robot):
             break
     robot.drive_system.stop()
     robot.sound_system.speech_maker.speak('Enemy Spotted on my Location. Executing Order 66')
-    time.sleep(2)
+    time.sleep(4)
     attack()
 
 
