@@ -30,7 +30,7 @@ def find_enemy(robot):
     robot.sound_system.speech_maker.speak('Enemy Spotted on my Location')
 
 
-def you_won(robot):
+def you_win(robot):
     robot = rosebot.RoseBot()
     robot.arm_and_claw.calibrate_arm()
     robot.sound_system.speech_maker.speak('Congratulations, lets do it again!')
