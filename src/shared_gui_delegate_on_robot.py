@@ -112,4 +112,16 @@ class DelegateThatReceives(object):
 
     def dance(self):
         print('Dance message received')
-        m3.dance()
+        m3.dance(self.robot)
+
+    def find_enemy(self):
+        print('Find enemy message received')
+        m3.find_enemy(self.robot)
+
+    def you_won(self):
+        print('Win message received')
+        m3.you_win(self.robot)
+
+    def you_lost(self):
+        print('Lose message received')
+        m3.you_lost(self.robot)
