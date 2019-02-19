@@ -35,26 +35,28 @@ def main():
     # -------------------------------------------------------------------------
     # The main frame, upon which the other frames are placed.
     # -------------------------------------------------------------------------
-    main_frame = ttk.Frame(root, padding=10, borderwidth=5, relief="groove")
-    main_frame.grid()
-
+    # main_frame = ttk.Frame(root, padding=10, borderwidth=5, relief="groove")
+    # main_frame.grid()
+    butler_window = ttk.Frame(root, padding=10, borderwidth=5, relief="groove")
+    butler_window.grid()
 
     # -------------------------------------------------------------------------
     # Sub-frames for the shared GUI that the team developed:
     # -------------------------------------------------------------------------
-    teleop_frame, arm_frame, control_frame, special_frame, sound_frame = get_shared_frames(main_frame, mqtt_sender)
+    # teleop_frame, arm_frame, control_frame, special_frame, sound_frame = get_shared_frames(main_frame, mqtt_sender)
 
 
     # -------------------------------------------------------------------------
     # Frames that are particular to my individual contributions to the project.
     # -------------------------------------------------------------------------
     # DONE: Implement and call get_my_frames(...)
-    proximity_frame = get_proximity_frame(main_frame, mqtt_sender)
+    # proximity_frame = get_proximity_frame(main_frame, mqtt_sender)
+    butler_frame = get_butler_frame(butler_window, mqtt_sender)
     # -------------------------------------------------------------------------
     # Grid the frames.
     # -------------------------------------------------------------------------
-    grid_frames(teleop_frame, arm_frame, control_frame, special_frame, sound_frame, proximity_frame)
-
+    # grid_frames(teleop_frame, arm_frame, control_frame, special_frame, sound_frame, proximity_frame)
+    butler_frame.grid()
 
     # -------------------------------------------------------------------------
     # The event loop:
@@ -133,6 +135,39 @@ def handle_frequency(frequency_entry, increase_rate_entry, mqtt_sender):
     print('Frequency Proximity', 'initial value:', frequency_entry.get(), 'rate:', increase_rate_entry.get())
     mqtt_sender.send_message("frequency_prox", [frequency_entry.get(), increase_rate_entry.get()])
 
+
+def get_butler_frame(window, mqtt_sender):
+    frame = ttk.Frame(window, padding=10, borderwidth=5, relief="ridge")
+    frame.grid()
+
+    frame_label = ttk.Label(frame, text="Butler Commands")
+    trash_button = ttk.Button(frame, text="Clean Up")
+    greetings_button = ttk.Button(frame, text='Greetings')
+    follow_button = ttk.Button(frame, text='Come to Me')
+
+    frame_label.grid(row=0, column=1)
+    trash_button.grid(row=1, column=0)
+    greetings_button.grid(row=1, column=1)
+    follow_button.grid(row=1, column=2)
+
+    trash_button["command"] = lambda: handle_trash(mqtt_sender)
+    greetings_button["command"] = lambda: handle_greeting(mqtt_sender)
+    follow_button["command"] = lambda: handle_follow(mqtt_sender)
+
+    return frame
+
+
+def handle_trash(mqtt_sender):
+    print('Looking for trash')
+    mqtt_sender.send_message('find_trash')
+
+def handle_greeting(mqtt_sender):
+    print('Good day!')
+    mqtt_sender.send_message('butler_greeting')
+
+def handle_follow(mqtt_sender):
+    print('What do you need?')
+    mqtt_sender.send_message('butler_come_to_me')
 
 # -----------------------------------------------------------------------------
 # Calls  main  to start the ball rolling.

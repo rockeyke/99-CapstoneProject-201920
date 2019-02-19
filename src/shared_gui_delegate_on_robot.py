@@ -109,3 +109,16 @@ class DelegateThatReceives(object):
     def spin_counterclockwise_until_sees_object(self, speed, area):
         print('Spin Counterclockwise message received')
         self.robot.drive_system.spin_counterclockwise_until_sees_object(int(speed), int(area))
+
+    def find_trash(self):
+        print('Fine trash message received')
+        m1.find_trash(self.robot)
+
+    def butler_greeting(self):
+        print('Greeting message received')
+        m1.butler_greeting(self.robot)
+
+    def butler_come_to_me(self):
+        print('I have been summoned')
+        m1.butler_come_to_me(self.robot)
+

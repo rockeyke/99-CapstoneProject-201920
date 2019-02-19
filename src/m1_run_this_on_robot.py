@@ -9,6 +9,7 @@ import rosebot
 import mqtt_remote_method_calls as com
 import time
 import shared_gui_delegate_on_robot
+import m1_special_functions as m1
 
 
 def main():
@@ -62,7 +63,7 @@ def real_thing():
 
 def real_butler():
     michaelis = rosebot.RoseBot()
-    butler_greeting(michaelis)
+    m1.butler_greeting(michaelis)
 
     receiver_delegate = shared_gui_delegate_on_robot.DelegateThatReceives(michaelis)
     mqtt_receiver = com.MqttClient(receiver_delegate)
@@ -72,18 +73,6 @@ def real_butler():
         time.sleep(0.01)
         if receiver_delegate.is_time_to_stop:
             break
-
-def butler_greeting(robot):
-    robot.arm_and_claw.raise_arm()
-    robot.arm_and_claw.motor.reset_position()
-    robot.sound_system.speech_maker.speak('Good day. I hope you are doing well.')
-    robot.arm_and_claw.motor.turn_on(-100)
-    while True:
-        if abs(robot.motor.get_position()) >= (14.2 * 360):
-            break
-    robot.arm_and_claw.motor.turn_off()
-    robot.arm_and_claw.motor.reset_position()
-    robot.sound_system.speech_maker.speak('I am ready to serve.')
 
 # -----------------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
