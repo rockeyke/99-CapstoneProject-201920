@@ -127,7 +127,7 @@ class DelegateThatReceives(object):
         m3.you_lost(self.robot)
 
     def find_trash(self):
-        print('Fine trash message received')
+        print('Find trash message received')
         m1.find_trash(self.robot)
 
     def butler_greeting(self):
