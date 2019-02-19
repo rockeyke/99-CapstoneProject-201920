@@ -22,7 +22,8 @@ def main():
     # -------------------------------------------------------------------------
     # Construct and connect the MQTT Client:
     # -------------------------------------------------------------------------
-    mqtt_sender = com.MqttClient()
+    d = Laptop_Delegate()
+    mqtt_sender = com.MqttClient(d)
     mqtt_sender.connect_to_ev3()
 
 
@@ -44,8 +45,8 @@ def main():
     # Sub-frames for the shared GUI that the team developed:
     # -------------------------------------------------------------------------
     # teleop_frame, arm_frame, control_frame, special_frame, sound_frame = get_shared_frames(main_frame, mqtt_sender)
-
-
+    teleop_frame = shared_gui.get_teleoperation_frame(butler_window, mqtt_sender)
+    basic_frame = get_basic_frame(butler_window, mqtt_sender)
     # -------------------------------------------------------------------------
     # Frames that are particular to my individual contributions to the project.
     # -------------------------------------------------------------------------
@@ -56,8 +57,9 @@ def main():
     # Grid the frames.
     # -------------------------------------------------------------------------
     # grid_frames(teleop_frame, arm_frame, control_frame, special_frame, sound_frame, proximity_frame)
-    butler_frame.grid()
-
+    teleop_frame.grid(row=1, column=0)
+    basic_frame.grid(row=0, column=0)
+    butler_frame.grid(row=0, column=1)
     # -------------------------------------------------------------------------
     # The event loop:
     # -------------------------------------------------------------------------
@@ -169,6 +171,47 @@ def handle_follow(mqtt_sender):
     print('What do you need?')
     mqtt_sender.send_message('butler_come_to_me')
 
+
+def get_basic_frame(window, mqtt_sender):
+    frame = ttk.Frame(window, padding=10, borderwidth=5, relief="ridge")
+    frame.grid()
+
+    frame_label = ttk.Label(frame, text='Basic Commands')
+    stop_button = ttk.Button(frame, text="Stop")
+    raise_arm_button = ttk.Button(frame, text="Raise arm")
+    lower_arm_button = ttk.Button(frame, text="Lower arm")
+    quit_robot_button = ttk.Button(frame, text="Quit")
+    exit_button = ttk.Button(frame, text="Exit")
+
+    stop_button["command"] = lambda: shared_gui.handle_stop(mqtt_sender)
+    raise_arm_button["command"] = lambda: shared_gui.handle_raise_arm(mqtt_sender)
+    lower_arm_button["command"] = lambda: shared_gui.handle_lower_arm(mqtt_sender)
+    quit_robot_button["command"] = lambda: shared_gui.handle_quit(mqtt_sender)
+    exit_button["command"] = lambda: shared_gui.handle_exit(mqtt_sender)
+
+    frame_label.grid(row=0, column=1)
+    raise_arm_button.grid(row=1, column=1)
+    stop_button.grid(row=2, column=1)
+    lower_arm_button.grid(row=3, column=1)
+    quit_robot_button.grid(row=4, column=0)
+    exit_button.grid(row=4, column=2)
+
+    return frame
+
+
+class Laptop_Delegate(object):
+
+    def found_trash(self):
+        print('piece of trash found')
+
+    def moving_trash(self):
+        print('moving trash to trash can')
+
+    def throw_away(self):
+        print('throwing trash away')
+
+    def no_trash(self):
+        print('no trash to be found')
 # -----------------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
 # -----------------------------------------------------------------------------

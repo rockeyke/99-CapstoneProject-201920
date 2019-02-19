@@ -21,8 +21,8 @@ def main():
     # run_test_arm()
     # run_test_drive()
     # run_proximity_test()
-    real_thing()
-
+    # real_thing()
+    real_butler()
 
 def run_test_arm():
     robot = rosebot.RoseBot()
@@ -61,6 +61,7 @@ def real_thing():
         if receiver_delegate.is_time_to_stop:
             break
 
+
 def real_butler():
     michaelis = rosebot.RoseBot()
     m1.butler_greeting(michaelis)
@@ -68,10 +69,12 @@ def real_butler():
     receiver_delegate = shared_gui_delegate_on_robot.DelegateThatReceives(michaelis)
     mqtt_receiver = com.MqttClient(receiver_delegate)
     mqtt_receiver.connect_to_pc()
+    receiver_delegate.laptop_sender = mqtt_receiver
 
     while True:
         time.sleep(0.01)
         if receiver_delegate.is_time_to_stop:
+            michaelis.sound_system.speech_maker.speak('Goodbye.').wait()
             break
 
 # -----------------------------------------------------------------------------

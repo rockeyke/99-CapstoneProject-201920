@@ -16,6 +16,7 @@ class DelegateThatReceives(object):
         """ :type   robot = rosebot.RoseBot  """
         self.robot = robot
         self.is_time_to_stop = False
+        self.laptop_sender = None
 
     def forward(self, left_speed, right_speed):
         print('forward message received')
@@ -127,8 +128,8 @@ class DelegateThatReceives(object):
         m3.you_lost(self.robot)
 
     def find_trash(self):
-        print('Find trash message received')
-        m1.find_trash(self.robot)
+        print('Fine trash message received')
+        m1.find_trash(self.robot, self.laptop_sender)
 
     def butler_greeting(self):
         print('Greeting message received')

@@ -88,46 +88,57 @@ def frequency_prox(robot, initial_frequency, increase_rate):
     robot.arm_and_claw.raise_arm()
 
 
-def find_trash(robot):
-    robot.drive_system.robot.drive_system.spin_counterclockwise_until_sees_object(25, 50)
-    robot.sound_system.speech_maker.speak('I have found trash. Let me dispose of it.')
+def find_trash(robot, mqtt_sender):
+    robot.drive_system.spin_counterclockwise_until_sees_object(25, -25)
+    mqtt_sender.send_message('found_trash')
+    robot.sound_system.speech_maker.speak('I have found trash. Let me dispose of it.').wait()
+
     frequency_prox(robot, 100, 50)
-    robot.sound_system.speech_maker.speak('I have the trash.')
+    mqtt_sender.send_message('moving_trash')
+    robot.sound_system.speech_maker.speak('I have the trash.').wait()
     follow_line(robot)
+
     robot.arm_and_claw.lower_arm()
+    mqtt_sender.send_message('throw_away')
+    robot.sound_system.speech_maker.speak('Trash disposed.').wait()
+
+    time.sleep(10)
+    mqtt_sender.send_message('no_trash')
 
 
 def follow_line(robot):
     print("Going towards trash")
-    robot.drive_system.go(50, 50)
     while True:
         if robot.sensor_system.color_sensor.get_color() != 1:
             robot.drive_system.go(25, 50)
         else:
-            robot.drive_system.go(50, 50)
+            robot.drive_system.go(50, 25)
         if robot.sensor_system.color_sensor.get_color() == 5:
+            robot.drive_system.stop()
             break
 
 
 def butler_greeting(robot):
     robot.arm_and_claw.raise_arm()
     robot.arm_and_claw.motor.reset_position()
-    robot.sound_system.speech_maker.speak('Good day. I hope you are doing well.')
+    robot.sound_system.speech_maker.speak('Good day. I hope you are doing well.').wait()
     robot.arm_and_claw.motor.turn_on(-100)
     while True:
-        if abs(robot.motor.get_position()) >= (14.2 * 360):
+        if abs(robot.arm_and_claw.motor.get_position()) >= (14.2 * 360):
             break
     robot.arm_and_claw.motor.turn_off()
     robot.arm_and_claw.motor.reset_position()
-    robot.sound_system.speech_maker.speak('I am ready to serve.')
+    robot.sound_system.speech_maker.speak('I am ready to serve.').wait()
 
 
 def butler_come_to_me(robot):
-    robot.drive_system.go(50, -50)
-    if robot.sensor_system.ir_proximity_sensor.get_distance() <= 100:
-        robot.drive_system.stop()
-        robot.drive_system.go_until_distance_is_within(0.5, 1, 50)
-
-        robot.arm_and_claw.raise_arm()
-        robot.sound_system.speech_maker.speak('How can I help you?')
-        robot.arm_and_claw.lower_arm()
+    robot.drive_system.go(25, -25)
+    while True:
+        print(robot.sensor_system.ir_proximity_sensor.get_distance())
+        if robot.sensor_system.ir_proximity_sensor.get_distance() <= 50:
+            robot.drive_system.stop()
+            break
+    robot.drive_system.go_forward_until_distance_is_less_than(5, 50)
+    robot.arm_and_claw.raise_arm()
+    robot.sound_system.speech_maker.speak('How can I help you?').wait()
+    robot.arm_and_claw.lower_arm()
