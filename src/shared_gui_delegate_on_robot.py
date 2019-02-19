@@ -109,3 +109,7 @@ class DelegateThatReceives(object):
     def spin_counterclockwise_until_sees_object(self, speed, area):
         print('Spin Counterclockwise message received')
         self.robot.drive_system.spin_counterclockwise_until_sees_object(int(speed), int(area))
+
+    def dance(self):
+        print('Dance message received')
+        m3.dance()
