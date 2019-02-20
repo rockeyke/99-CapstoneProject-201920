@@ -89,7 +89,7 @@ def frequency_prox(robot, initial_frequency, increase_rate):
 
 
 def find_trash(robot, mqtt_sender):
-    robot.drive_system.spin_counterclockwise_until_sees_object(25, -25)
+    robot.drive_system.spin_counterclockwise_until_sees_object(25, 3)
     mqtt_sender.send_message('found_trash')
     robot.sound_system.speech_maker.speak('I have found trash. Let me dispose of it.').wait()
 
@@ -135,7 +135,7 @@ def butler_come_to_me(robot):
     robot.drive_system.go(25, -25)
     while True:
         print(robot.sensor_system.ir_proximity_sensor.get_distance())
-        if robot.sensor_system.ir_proximity_sensor.get_distance() <= 50:
+        if robot.sensor_system.ir_proximity_sensor.get_distance() < 100:
             robot.drive_system.stop()
             break
     robot.drive_system.go_forward_until_distance_is_less_than(5, 50)
