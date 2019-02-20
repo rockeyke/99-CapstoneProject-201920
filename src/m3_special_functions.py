@@ -27,7 +27,7 @@ def find_enemy(robot):
     lws = 50
     rws = 50
     robot.drive_system.go(lws, rws)
-    area = 600
+    area = 500
     while True:
         b = robot.sensor_system.camera.get_biggest_blob()
         print(b)
