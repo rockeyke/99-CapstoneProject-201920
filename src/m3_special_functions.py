@@ -1,3 +1,7 @@
+# Final Project Code
+# Author: Alex Hinojosa
+# Date: February 20th, 2019
+
 import time
 import rosebot
 
@@ -23,7 +27,7 @@ def find_enemy(robot):
     lws = 50
     rws = 50
     robot.drive_system.go(lws, rws)
-    area = 1000
+    area = 600
     while True:
         b = robot.sensor_system.camera.get_biggest_blob()
         print(b)
